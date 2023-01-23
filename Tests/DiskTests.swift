@@ -50,12 +50,19 @@ class DiskTests: XCTestCase {
         }
         return array
     }()
-    
+#if os(watchOS)
+    let images = [
+        UIImage(named: "Deku", in: Bundle(for: DiskTests.self), with: nil)!,
+        UIImage(named: "AllMight", in: Bundle(for: DiskTests.self), with: nil)!,
+        UIImage(named: "Bakugo", in: Bundle(for: DiskTests.self), with: nil)!
+    ]
+#else
     let images = [
         UIImage(named: "Deku", in: Bundle(for: DiskTests.self), compatibleWith: nil)!,
         UIImage(named: "AllMight", in: Bundle(for: DiskTests.self), compatibleWith: nil)!,
         UIImage(named: "Bakugo", in: Bundle(for: DiskTests.self), compatibleWith: nil)!
     ]
+#endif
     
     lazy var data: [Data] = self.images.map { $0.pngData()! }
     
@@ -814,14 +821,17 @@ class DiskTests: XCTestCase {
     func testiOS11VolumeStorageResourceValues() {
         XCTAssert(Disk.totalCapacity != nil && Disk.totalCapacity != 0)
         XCTAssert(Disk.availableCapacity != nil && Disk.availableCapacity != 0)
+        #if !os(watchOS)
         XCTAssert(Disk.availableCapacityForImportantUsage != nil && Disk.availableCapacityForImportantUsage != 0)
         XCTAssert(Disk.availableCapacityForOpportunisticUsage != nil && Disk.availableCapacityForOpportunisticUsage != 0)
-        
+        #endif
         print("\n\n============== Disk iOS 11 Volume Information ==============")
         print("Disk.totalCapacity = \(Disk.totalCapacity!)")
         print("Disk.availableCapacity = \(Disk.availableCapacity!)")
+#if !os(watchOS)
         print("Disk.availableCapacityForImportantUsage = \(Disk.availableCapacityForImportantUsage!)")
         print("Disk.availableCapacityForOpportunisticUsage = \(Disk.availableCapacityForOpportunisticUsage!)")
+#endif
         print("============================================================\n\n")
     }
     

@@ -55,6 +55,7 @@ public extension Disk {
     ///
     /// Indicates the amount of space that can be made available  for things the user has explicitly requested in the app's UI (i.e. downloading a video or new level for a game.)
     /// If you need more space than what's available - let user know the request cannot be fulfilled.
+#if !os(watchOS)
     static var availableCapacityForImportantUsage: Int? {
         get {
             let resourceValues = getVolumeResourceValues(for: .volumeAvailableCapacityForImportantUsageKey)
@@ -80,4 +81,5 @@ public extension Disk {
             }
         }
     }
+#endif
 }
