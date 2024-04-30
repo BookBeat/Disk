@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.10
 import PackageDescription
 
 let package = Package(
@@ -11,13 +11,12 @@ let package = Package(
         .target(
             name: "Disk",
             path: "Sources",
-            exclude: ["DiskExample"]
+            resources: [.process("PrivacyInfo.xcprivacy")]
         ),
         .testTarget(
             name: "DiskTests",
             dependencies: ["Disk"],
-            path: "Tests",
-            exclude:  ["DiskExample"]
+            path: "Tests"
         )
     ]
 )
